@@ -1,32 +1,33 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
-  </div>
+  <v-app>
+    <TopNav />
+    <v-main>
+      <router-view></router-view>
+    </v-main>
+    <v-snackbar
+      v-model="$store.state.snackbar.show"
+      :multi-line="true"
+      :right="true"
+      :top="true"
+      :timeout="6000"
+      :color="$store.state.snackbar.variant"
+    >
+      {{ $store.state.snackbar.message }}
+      <v-btn dark text @click="$store.commit('updateSnackbar', false)"
+        >Close</v-btn
+      >
+    </v-snackbar>
+  </v-app>
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+import TopNav from "./components/TopNav";
 
-#nav {
-  padding: 30px;
-}
+export default {
+  name: "App",
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
-</style>
+  components: {
+    TopNav,
+  },
+};
+</script>
